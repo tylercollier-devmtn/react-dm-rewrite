@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.products {
+  margin: 2em auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.products > div {
+  margin: 2.5em auto;
+  width: 800px;
+  border: solid rgb(0, 200, 255) .3em;
+}
+
+.products > div > img {
+  margin: 20px;
+  width: 500px;
+  height: 425px;
+}
+
+.checkout {
+  width: 50%;
+  margin: 25px auto;
+  border: solid black .5em;
+}
+
+.checkout > .cart {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+span.name {
+  margin: 5px 25px;
+}
+
+span.price {
+  padding: 5px 15px;
+}
+
+.checkout-bottom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: red;
+}
+
+.input {
+  width: 150%;
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+  border: solid black 2px;
+}
+
+.inputs > label {
+  background-color: blueviolet;
+  text-align: left;
+  color: white;
+}
+
+.total {
+  margin-right: 20%;
+}
+
+button {
+  margin: 10px auto;
+  padding: 10px;
+}
