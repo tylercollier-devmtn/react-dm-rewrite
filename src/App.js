@@ -11,6 +11,7 @@ import dm_tee from './assets/DM_Tee.jpg';
 //React 2
 import List from './2components/List';
 import Button from './2components/Button';
+import DeleteBtn from './2components/DeleteBtn'
 
 
 const products = [{id: 0, product_name: 'WebDev Tri T-Shirt', price: 24.99, picture: dm_tee}, {id: 1, product_name: 'WebDev Ladies Tri T-shirt', price: 24.99, picture: dm_ladies}, {id: 2, product_name: '#DevLife Modern Dad Cap', price: 18.99, picture: dm_hat}, {id: 3, product_name: 'DevMountain Shiny Bottle', price: 29.99, picture: dm_bottle}, {id: 4, product_name: 'DevMountain Lanyard', price: 5.99, picture: dm_lanyard}, {id: 5, product_name: 'DevMountain Moonwalk Socks', price: 14.99, picture: dm_socks} ]
@@ -24,8 +25,7 @@ class App extends Component {
           name: '',
           message: '',
           // React 2
-          standardCheck: false,
-          expeditedCheck: false,
+          shipping: false,
           giftWrap: false,
           validZip: false,
         }
@@ -33,12 +33,34 @@ class App extends Component {
 
     // Create addProduct method here //
     addProduct = (item) => {
-      console.log(item.price)
-        let num = this.state.total + item.price;
+      console.log(item)
+      let num;
+      let newCart;
+      setTimeout(() => {
+    //     let count = 0;
+    //   if(this.state.cart.length){
+    //     console.log('hey2222')
+    //     newCart = this.state.cart.slice().map(e => {
+    //     if(e.product_name === item.product_name){
+    //       ++count
+    //       let name = products.slice().map(elem => {
+    //         if(elem.product_name === e.product_name){
+    //           return elem.product_name + ` x ${count}`;
+    //         } 
+    //       })
+    //       e.product_name = name
+    //     }
+    //     return e;
+    //   })
+    //   this.setState({
+    //     cart: newCart
+    //   })
+    //   return
+    // }
+        num = this.state.total + item.price;
         //Potential Black Diamond to round decimal places
         let total = Math.round(num * 100) / 100
         // End Potential Black Diamond
-        setTimeout(() => {
           console.log(this.state)
         this.setState({
           total: total,
@@ -49,7 +71,7 @@ class App extends Component {
       }
 
     // Create handleUserInput method here //
-      handleUserInput (e) {
+      handleUserInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         console.log(value)
@@ -71,25 +93,44 @@ class App extends Component {
         let val = e.target.value;
         let copy = this.state.cart.slice();
         if(val === 'Standard'){
-          console.log('Copy', copy)
-          let newTotal = 0;
-          let newCart = copy.filter(e => e.product_name !== 'Expedited Shipping')
-          newCart.forEach(e => newTotal += e.price)
-          console.log(newCart, copy)
-          this.setState({
+          let newCart = copy.filter(e => {
+            if(e.product_name === 'Expedited Shipping') {
+            this.setState({
+              total: this.state.total -= 5.99
+            })
+            return
+            } else {
+              return e
+            }})
+          console.log('2', newCart, copy)
+          this.setState(() => {
+            return {
             cart: newCart,
-            // total: newTotal
+            // total: .reduce((a, c) => a + c.price, 0)
+            shipping: !this.state.shipping
+            }
           })
           console.log(newCart, copy)
-          this.addProduct({product_name: 'Standard Shipping', price: 0.00})
+          // this.addProduct({id: 6, product_name: 'Standard Shipping', price: 0.00})
         } else if (val === 'Expedited'){
-          let copy = this.state.cart.slice();
+          // let copy = this.state.cart.slice();
+          let newCart = copy.filter(e => e.product_name !== 'Standard Shipping')
+          console.log(newCart, copy)
+          this.setState(() => {
+            return {
+            cart: newCart,
+            shipping: true
+            }
+          })
           console.log('E', copy)
-          this.addProduct({product_name: 'Expedited Shipping', price: 5.99})
+          // this.addProduct({id: 7, product_name: 'Expedited Shipping', price: 5.99})
         } else {
           let copy = this.state.cart.slice();
           console.log('Gift', copy)
-          this.addProduct({product_name: 'Gift Wrap', price: 9.99})
+          // this.addProduct({id: 8, product_name: 'Gift Wrap', price: 9.99})
+          this.setState({
+            giftWrap: !this.state.giftWrap
+          })
         }
       }
 
@@ -169,12 +210,24 @@ class App extends Component {
       }
 
       // REACT 2 //
-      delete = (id) => {
+      deleteItem = (id) => {
         let copy = this.state.cart.slice();
         let newCart = copy.filter(e => e.id !== id)
-        this.setState({
-          cart: newCart
-        })
+        setTimeout(() => {
+          console.log(newCart, copy)
+        }, 1000)
+            this.setState({
+              cart: newCart,
+              total: newCart.reduce((a, c) => a + c.price, 0)
+            })
+      }
+
+      calculateTotal(){
+        let total = this.state.cart.map(e => {
+          return e.price
+        }).reduce((a, c) => a + c, 0)
+        console.log('--------total', total);
+        return total
       }
 
   render() {
@@ -183,20 +236,23 @@ class App extends Component {
     //         // React 2
     //         <List key={i}>
     //           <ul>
-    //               <img src={item.picture} alt={item.product_name}/>
+    //             <div className='image'>
+    //               <img name={item.id} src={item.picture} alt={item.product_name}/>
+    //             </div>
     //               <li>{item.product_name}</li>
     //               <li>{item.price}</li>
-    //               <button onClick={item => this.addProduct(item)}>Add To Cart</button>
+    //               <button onClick={() => this.addProduct(item)}>Add To Cart</button>
     //           </ul>
     //         </List>
     //     )
     // })
     // let currentCart = this.state.cart.map((e, i) => {
     //     return (
-    //       <List>
+    //       <List key={i}>
     //         <ul>
     //           <li>{e.product_name}</li>
     //           <li>{e.price}</li>
+    //           <DeleteBtn delete={() => this.deleteItem(e.id)} icon="fas fa-times-circle" />
     //         </ul>
     //       </List>
     //     )
@@ -206,7 +262,7 @@ class App extends Component {
       <div className="App">
 
       <header>
-        <h1>DevMountain Shop</h1>
+        <h1 className='title'>DevMountain Shop</h1>
       </header>
 
         <div className='products'>
@@ -218,7 +274,9 @@ class App extends Component {
 
         <div className="checkout">
         {/* {currentCart} */}
-        <List products={this.state.cart} showPicture={false} delete={this.delete}/>
+        <div className='items'>
+          <List products={this.state.cart} showPicture={false} delete={this.deleteItem}/>
+        </div>
             <div className='checkout-bottom'>
 
                 <div className='input-group'>
@@ -230,15 +288,15 @@ class App extends Component {
 
                   <div id="confirm">
                     <div className='checkout-options'>
-                        <label><input value='Standard' type="radio" onClick={e => this.toggleCheck(e)} checked={this.state.standardCheck}/>Standard</label>
-                        <label><input value='Expedited' type="radio" onClick={e => this.toggleCheck(e)} checked={this.state.expeditedCheck}/>Expedited ($5.99)</label>
-                        <label><input value='Gift Wrap' type="radio" onClick={e => this.toggleCheck(e)} checked={this.state.giftWrap}/>Gift Wrap ($9.99)</label>
+                        <label><input value='Standard' type="radio" onClick={e => this.toggleCheck(e)} defaultChecked={!this.state.shipping}/>Standard</label>
+                        <label><input value='Expedited' type="radio" onClick={e => this.toggleCheck(e)} defaultChecked={this.state.shippingk}/>Expedited ($5.99)</label>
+                        <label><input value='Gift Wrap' type="checkbox" onClick={e => this.toggleCheck(e)} checked={this.state.giftWrap}/>Gift Wrap ($9.99)</label>
                     </div>
                         {!this.state.message ?  null : this.state.message !== 'Payment Successful!' ? <h4 style={{color: 'red'}}>{this.state.message}</h4> : <h4 style={{color: 'green'}}>{this.state.message}</h4>}
                   </div>
                 </div>
 
-                <h1>${this.state.total}</h1>
+                <h1>${this.calculateTotal()}</h1>
                 <Button text='Confirm Payment' action={this.clearCart} />
                 {/* <button className='confirm-btn' type='submit' onClick={this.clearCart}>Confirm Payment</button>  */}
                 <br/>
