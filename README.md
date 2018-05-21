@@ -1,6 +1,7 @@
-# Project Summary ----------
+# Project Summary 
 
-In this project, we'll introduce you to React by creating a small project from scratch. We'll make use of the create-react-app CLI tool to quickly generate a React boilerplate. The goal of this project is to create a simple interface for creating a DevMountain Shop that utilizes a cart feature.
+In this mini-project, we will expand upon the application we created during React-1. In doing so, we will create Reusable Stateless-Functional-Components, add options during checkout, validate inputs and cover the usage of ```props``` within React.
+
 
 ### Live Example
 

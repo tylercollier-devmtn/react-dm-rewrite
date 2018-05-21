@@ -14,7 +14,7 @@ import Button from './2components/Button';
 import DeleteBtn from './2components/DeleteBtn'
 
 
-const products = [{id: 0, productName: 'WebDev Tri T-Shirt', price: 25.00, picture: dm_tee}, {id: 1, productName: 'WebDev Ladies Tri T-shirt', price: 25.00, picture: dm_ladies}, {id: 2, productName: '#DevLife Modern Dad Cap', price: 19.00, picture: dm_hat}, {id: 3, productName: 'DevMountain Shiny Bottle', price: 20.00, picture: dm_bottle}, {id: 4, productName: 'DevMountain Lanyard', price: 6.00, picture: dm_lanyard}, {id: 5, productName: 'DevMountain Moonwalk Socks', price: 15.00, picture: dm_socks} ]
+const products = [{id: 0, productName: 'WebDev Tri T-Shirt', price: 25.00, picture: dm_tee, quantity: 0}, {id: 1, productName: 'WebDev Ladies Tri T-shirt', price: 25.00, picture: dm_ladies, quantity: 0}, {id: 2, productName: '#DevLife Modern Dad Cap', price: 19.00, picture: dm_hat, quantity: 0}, {id: 3, productName: 'DevMountain Shiny Bottle', price: 20.00, picture: dm_bottle, quantity: 0}, {id: 4, productName: 'DevMountain Lanyard', price: 6.00, picture: dm_lanyard, quantity: 0}, {id: 5, productName: 'DevMountain Moonwalk Socks', price: 15.00, picture: dm_socks, quantity: 0} ]
 
 class App extends Component {
     constructor(){
@@ -32,41 +32,23 @@ class App extends Component {
 
     // Create addProduct method here //
     addProduct = (item) => {
-      console.log(item)
       let num;
-      let newCart;
       setTimeout(() => {
-    //     let count = 0;
-    //   if(this.state.cart.length){
-    //     console.log('hey2222')
-    //     newCart = this.state.cart.slice().map(e => {
-    //     if(e.productName === item.productName){
-    //       ++count
-    //       let name = products.slice().map(elem => {
-    //         if(elem.productName === e.productName){
-    //           return elem.productName + ` x ${count}`;
-    //         } 
-    //       })
-    //       e.productName = name
-    //     }
-    //     return e;
-    //   })
-    //   this.setState({
-    //     cart: newCart
-    //   })
-    //   return
-    // }
         num = this.state.total + item.price;
-        //Potential Black Diamond to round decimal places
-        let total = Math.round(num * 100) / 100
-        // End Potential Black Diamond
+        item.quantity+=1
+        console.log(item)
+        if(this.state.cart.includes(item)){
+          this.setState(this.state)
+          return
+        }
           console.log(this.state)
+          // item.cartId = this.state.cart.length
+          console.log(item)
         this.setState({
-          total: total,
+          total: num,
           cart: [...this.state.cart, item]
         })}, 100)
         num = 0;
-
       }
 
     // Create handleUserInput method here //
@@ -88,40 +70,18 @@ class App extends Component {
       }
 
       // Create toggleCheck method here //
+      // Method needs to update shipping and giftWrap properties in state //
       toggleCheck = (e) => {
         let val = e.target.value;
-        let copy = this.state.cart.slice();
         if(val === 'Standard'){
-          let newCart = copy.filter(e => {
-            if(e.productName === 'Expedited Shipping') {
-            this.setState({
-              total: this.state.total - 5.99
-            })
-            return
-            } else {
-              return e
-            }})
-          console.log('2', newCart, copy)
-          this.setState(() => {
-            return {
-            cart: newCart,
+          this.setState({
             shipping: !this.state.shipping
-            }
           })
-          console.log(newCart, copy)
         } else if (val === 'Expedited'){
-          let newCart = copy.filter(e => e.productName !== 'Standard Shipping')
-          console.log(newCart, copy)
-          this.setState(() => {
-            return {
-            cart: newCart,
+          this.setState({
             shipping: true
-            }
           })
-          console.log('E', copy)
         } else {
-          let copy = this.state.cart.slice();
-          console.log('Gift', copy)
           this.setState({
             giftWrap: !this.state.giftWrap
           })
@@ -131,6 +91,7 @@ class App extends Component {
 
 
       // Create clearCart method here //
+      // Method needs to validate Checkout Inputs & Reset State //
       clearCart = () => {
         if(!this.state.name || !this.state.email || !this.state.zip){
           this.setState({
@@ -149,8 +110,7 @@ class App extends Component {
           name: '',
           email: '', 
           zip: '',
-          standardCheck: false,
-          expeditedCheck: false,
+          shipping: !this.state.shipping,
           giftWrap: false,
           message: 'Payment Successful!'
           })
@@ -158,24 +118,39 @@ class App extends Component {
       }
 
       // REACT 2 //
-      deleteItem = (id) => {
-        let copy = this.state.cart.slice();
-        let newCart = copy.filter(e => e.id !== id)
-        setTimeout(() => {
-          console.log(newCart, copy)
-        }, 1000)
-            this.setState({
-              cart: newCart,
-              total: newCart.reduce((a, c) => a + c.price, 0)
-            })
+
+      // Create deleteItem method here to remove items from cart //
+      deleteItem = (item) => {
+        let copy = this.state.cart.slice()
+        // let newCart;
+        if(copy.includes(item) && item.quantity > 1){
+          item.quantity--
+          this.setState(this.state)
+          return
+        } else {
+          let newCart = copy.filter(element => element !== item)
+          setTimeout(() => {
+          }, 1000)
+              this.setState({
+                cart: newCart
+              })
+        }
       }
 
+      // Create calulateTotal Method here //
       calculateTotal(){
         let total = this.state.cart.map(e => {
+          if(e.quantity > 1){
+            total = e.price * e.quantity
+            return total
+          }
           return e.price
         }).reduce((a, c) => a + c, 0)
         if(this.state.shipping) {
           total += 5;
+        }
+        if(this.state.giftWrap) {
+          total += 10;
         }
         console.log('--------total', total);
         return total
@@ -240,8 +215,8 @@ class App extends Component {
                   <div id="confirm">
                     <div className='checkout-options'>
                         <label><input value='Standard' type="radio" onChange={e => this.toggleCheck(e)} checked={!this.state.shipping}/>Standard</label>
-                        <label><input value='Expedited' type="radio" onChange={e => this.toggleCheck(e)} checked={this.state.shipping}/>Expedited ($5.99)</label>
-                        <label><input value='Gift Wrap' type="checkbox" onClick={e => this.toggleCheck(e)} checked={this.state.giftWrap}/>Gift Wrap ($9.99)</label>
+                        <label><input value='Expedited' type="radio" onChange={e => this.toggleCheck(e)} checked={this.state.shipping}/>Expedited ($5.00)</label>
+                        <label><input value='Gift Wrap' type="checkbox" onClick={e => this.toggleCheck(e)} checked={this.state.giftWrap}/>Gift Wrap ($10.00)</label>
                     </div>
                         {!this.state.message ?  null : this.state.message !== 'Payment Successful!' ? <h4 style={{color: 'red'}}>{this.state.message}</h4> : <h4 style={{color: 'green'}}>{this.state.message}</h4>}
                   </div>

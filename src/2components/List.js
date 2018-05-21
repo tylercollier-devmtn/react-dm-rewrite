@@ -7,6 +7,7 @@ import DeleteBtn from './DeleteBtn'
 const List = (props) => {
     console.log(props)
     let list = props.products.map((item, i) => {
+        console.log('Item---', item)
         return (
             <div key={i}>
             <ul className='list' >
@@ -15,7 +16,8 @@ const List = (props) => {
                  <br/>
                  <li>${item.price}</li>
                  <br/>
-                 {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn delete={() => props.delete(item.id)} icon="noEntry" />}
+                 {!props.showPicture ? <li>Quantity: {item.quantity}</li> : null}
+                 {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn delete={() => props.delete(item)} icon="noEntry" />}
                 
              </ul>
             </div>

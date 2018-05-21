@@ -1,5 +1,6 @@
 import React from 'react';
-import icons from 'glyphicons';
+// import * as FontAwesome from 'react-icons/lib/fa'
+import icons from 'glyphicons'
 
 
 // Create reusable Button Component Here //
@@ -7,11 +8,15 @@ import icons from 'glyphicons';
 
 const Button = (props) => {
  let symbol = props.icon
+//  console.log('--------currentProps', props)
 //  console.log(props.icon, icons.shoppingTrolley, icons[symbol])
 
 //   let button = props.params ? <button onClick={() => props.action(props.params)}>{props.text}</button> : <button onClick={() => props.action()}>{props.text}</button>;
 
-  let button = props.params ? <button onClick={() => props.action(props.params)} className="symbol">{icons[symbol]}</button> : <button onClick={() => props.action()}>{props.text}</button>;
+  let button = props.params ? 
+                    props.icon ? <button onClick={() => props.action(props.params)} className="symbol">{icons[symbol]}</button> 
+                            : <button onClick={() => props.action(props.params)}>{props.text}</button> 
+                                : <button onClick={() => props.action()}>{props.text}</button>;
 
     return (
         <div>
