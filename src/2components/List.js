@@ -2,18 +2,20 @@ import React from 'react';
 import Button from './Button';
 import DeleteBtn from './DeleteBtn'
 
+// Create Reusable List Component here //
+
 const List = (props) => {
     console.log(props)
     let list = props.products.map((item, i) => {
         return (
             <div key={i}>
             <ul className='list' >
-                 {props.showPicture ? <div className='image'><img src={item.picture} alt={item.product_name} /></div> : null}
-                 <li><b>{item.product_name}</b></li>
+                 {props.showPicture ? <div className='image'><img src={item.picture} alt={item.productName} /></div> : null}
+                 <li><b>{item.productName}</b></li>
                  <br/>
-                 <li>{item.price}</li>
+                 <li>${item.price}</li>
                  <br/>
-                 {props.add ? <Button text='Add To Cart' params={item} action={props.add} /> : <DeleteBtn delete={() => props.delete(item.id)} icon="fas fa-times-circle" />}
+                 {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn delete={() => props.delete(item.id)} icon="noEntry" />}
                 
              </ul>
             </div>
@@ -25,14 +27,6 @@ const List = (props) => {
 
 // image list - image url
 // some text
-// opitonal btn 
-
-// const List = (props) => {
-//     return (
-//         <div>
-//             {props.children}
-//         </div>
-//     )
-// }
+// optional btn 
  
 export default List;

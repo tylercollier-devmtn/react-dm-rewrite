@@ -1,10 +1,15 @@
 import React from 'react';
+import icons from 'glyphicons';
+
+
+// Create DeleteBtn functional component here (Component needs a symbol prop) //
+// This component will be used to delete items from our cart //
 
 const DeleteBtn = ( props ) => {
-    console.log(props)
+    let symbol = props.icon
     return (
         <span>
-            <i className={props.icon} onClick={props.delete}></i>
+            <span onClick={props.delete}>{icons[symbol]}</span>
         </span>
     )
 }

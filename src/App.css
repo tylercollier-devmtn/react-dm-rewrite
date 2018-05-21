@@ -127,3 +127,7 @@ img {
   justify-content: space-around;
   align-items: center;
 }
+
+.symbol {
+  font-size: 2em;
+}
