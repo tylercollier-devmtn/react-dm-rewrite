@@ -5,9 +5,9 @@ import DeleteBtn from './DeleteBtn'
 // Create Reusable List Component here //
 
 const List = (props) => {
-    console.log(props)
+    // console.log(props)
     let list = props.products.map((item, i) => {
-        console.log('Item---', item)
+        // console.log('Item---', item)
         return (
             <div key={i}>
             <ul className='list' >
@@ -17,7 +17,7 @@ const List = (props) => {
                  <li>${item.price}</li>
                  <br/>
                  {!props.showPicture ? <li>Quantity: {item.quantity}</li> : null}
-                 {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn delete={() => props.delete(item)} icon="noEntry" />}
+                 {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn action={() => props.delete(item)} icon="noEntry" />}
                 
              </ul>
             </div>

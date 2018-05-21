@@ -4,11 +4,14 @@ In this mini-project, we will expand upon the application we created during Reac
 
 
 ### Live Example
+Click Me!
 
 ### Setup
 
-Fork and clone this repository
-```Run sudo npm install -g create-react-app```
+```Fork``` and ```clone``` this repository.
+```cd``` into the project directory.
+Run ```npm install``` or ```yarn```
+Run ```npm start``` or ```yarn start``` once install has finished.
 
 ## Step 1
 
@@ -18,6 +21,8 @@ Fork and clone this repository
 
 ### Solution
 
+
+
 ## Step 2
 
 ### Summary
@@ -25,6 +30,8 @@ Fork and clone this repository
 ### Instructions
 
 ### Solution
+
+
 
 ## Step 3
 

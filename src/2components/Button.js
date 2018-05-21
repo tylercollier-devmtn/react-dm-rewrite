@@ -14,7 +14,7 @@ const Button = (props) => {
 //   let button = props.params ? <button onClick={() => props.action(props.params)}>{props.text}</button> : <button onClick={() => props.action()}>{props.text}</button>;
 
   let button = props.params ? 
-                    props.icon ? <button onClick={() => props.action(props.params)} className="symbol">{icons[symbol]}</button> 
+                    symbol ? <button onClick={() => props.action(props.params)} className="symbol">{icons[symbol]}</button> 
                             : <button onClick={() => props.action(props.params)}>{props.text}</button> 
                                 : <button onClick={() => props.action()}>{props.text}</button>;
 

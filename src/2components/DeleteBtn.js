@@ -9,7 +9,7 @@ const DeleteBtn = ( props ) => {
     let symbol = props.icon
     return (
         <span>
-            <span onClick={props.delete}>{icons[symbol]}</span>
+            <span onClick={props.action}>{icons[symbol]}</span>
         </span>
     )
 }
