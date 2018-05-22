@@ -17,7 +17,6 @@ const Button = (props) => {
                     symbol ? <button onClick={() => props.action(props.params)} className="symbol">{icons[symbol]}</button> 
                             : <button onClick={() => props.action(props.params)}>{props.text}</button> 
                                 : <button onClick={() => props.action()}>{props.text}</button>;
-
     return (
         <div>
             {button}
