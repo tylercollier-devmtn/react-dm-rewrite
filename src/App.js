@@ -91,7 +91,7 @@ class App extends Component {
 
 
       // Create clearCart method here //
-      // Method needs to validate Checkout Inputs & Reset State //
+      // Method needs to validate additional Checkout Inputs & Reset State //
       clearCart = () => {
         if(!this.state.name || !this.state.email || !this.state.zip){
           this.setState({
@@ -120,9 +120,9 @@ class App extends Component {
       // REACT 2 //
 
       // Create deleteItem method here to remove items from cart //
+      // Method needs to filter out selected item from current cart in state //
       deleteItem = (item) => {
         let copy = this.state.cart.slice()
-        // let newCart;
         if(copy.includes(item) && item.quantity > 1){
           item.quantity--
           this.setState(this.state)
@@ -138,6 +138,7 @@ class App extends Component {
       }
 
       // Create calulateTotal Method here //
+      // Update Method to check for quantity and include additional checkout charges //
       calculateTotal(){
         let total = this.state.cart.map(e => {
           if(e.quantity > 1){
@@ -152,7 +153,6 @@ class App extends Component {
         if(this.state.giftWrap) {
           total += 10;
         }
-        // console.log('--------total', total);
         return total
       }
 
@@ -183,7 +183,7 @@ class App extends Component {
     //       </List>
     //     )
     //   })
-    // console.log(this.state)
+
     return (
       <div className="App">
 
@@ -205,6 +205,7 @@ class App extends Component {
         </div>
             <div className='checkout-bottom'>
 
+            {/* Create Additional Input Fields for email and zipcode */}
                 <div className='input-group'>
                 <h3>Customer Information:</h3>
                   <input value={this.state.name} className="input" onChange={e => this.handleUserInput(e)} type="text" name='name' placeholder='Enter Name'/>
@@ -212,6 +213,7 @@ class App extends Component {
                   <input value={this.state.zip} className='input' onChange={e => this.handleUserInput(e)} type='number' name='zip' placeholder='Enter Zip Code' />
                   {this.state.zip ? this.state.validZip ? <i className="fas fa-check-circle">Zip Code Verified</i> : <i className="fas fa-times-circle">Zip Code Not Verified</i> : null}
 
+                  {/* Include additional checkout options for shipping and giftwrap */}
                   <div id="confirm">
                     <div className='checkout-options'>
                         <label><input value='Standard' type="radio" onChange={e => this.toggleCheck(e)} checked={!this.state.shipping}/>Standard</label>
