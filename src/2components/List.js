@@ -10,15 +10,17 @@ const List = (props) => {
         // console.log('Item---', item)
         return (
             <div key={i}>
-            <ul className='list' >
-                 {props.showPicture ? <div className='image'><img src={item.picture} alt={item.productName} /></div> : null}
-                    <li><b>{item.productName}</b></li>
-                        <br/>
+                <ul className='list' >
+                        {props.showPicture ? <div className='image'>
+                                            <img src={item.picture} alt={item.productName} />
+                                         </div> : null}
+                        <li><b>{item.productName}</b></li>
+                            <br/>
                         <li>${item.price}</li>
-                        <br/>
+                            <br/>
                         {!props.showPicture ? <li>Quantity: {item.quantity}</li> : null}
                         {props.add ? <Button icon="shoppingTrolley" params={item} action={props.add} /> : <DeleteBtn action={() => props.delete(item)} icon="noEntry" />}
-             </ul>
+                </ul>
             </div>
         )
     })
