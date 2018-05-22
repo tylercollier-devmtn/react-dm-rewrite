@@ -8,32 +8,26 @@ import dm_lanyard from './assets/DM_Lanyard.jpg';
 import dm_socks from './assets/DM_Socks.jpeg';
 import dm_tee from './assets/DM_Tee.jpg';
  
-const products = [{product_name: 'WebDev Tri T-Shirt', price: 24.99, picture: dm_tee}, {product_name: 'WebDev Ladies Tri T-shirt', price: 24.99, picture: dm_ladies}, {product_name: '#DevLife Modern Dad Cap', price: 18.99, picture: dm_hat}, {product_name: 'DevMountain Shiny Bottle', price: 29.99, picture: dm_bottle}, {product_name: 'DevMountain Lanyard', price: 5.99, picture: dm_lanyard}, {product_name: 'DevMountain Moonwalk Socks', price: 14.99, picture: dm_socks} ]
+const products = [{product_name: 'WebDev Tri T-Shirt', price: 25.00, picture: dm_tee}, {product_name: 'WebDev Ladies Tri T-shirt', price: 25.00, picture: dm_ladies}, {product_name: '#DevLife Modern Dad Cap', price: 19.00, picture: dm_hat}, {product_name: 'DevMountain Shiny Bottle', price: 20.00, picture: dm_bottle}, {product_name: 'DevMountain Lanyard', price: 6.00, picture: dm_lanyard}, {product_name: 'DevMountain Moonwalk Socks', price: 15.00, picture: dm_socks} ]
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      total: 0,
       cart: [],
       name: '',
       message: '',
     }
   }
 
+// Create addProduct Method Here //
 addProduct = (e) => {
-
-  let num = this.state.total + e.price;
-  //Potential Black Diamond to round decimal places
-  let total = Math.round(num * 100) / 100
-  // End Potential Black Diamond
   this.setState({
-    total: total,
     cart: [...this.state.cart, e]
   })
-  num = 0;
 }
 
+// Create clearCart Method here //
 clearCart = () => {
   if(!this.state.name){
     this.setState({
@@ -47,40 +41,49 @@ clearCart = () => {
     return
   } else {
   this.setState({
-    total: 0,
     cart: [],
     name: '',
-    message: ''
+    message: 'Payment Successful!'
     })
   }
 }
 
+// Create handleUserInput Method here //
 handleUserInput (e) {
   const name = e.target.name;
   const value = e.target.value;
   this.setState({[name]: value});
 }
 
+// Create calculateTotal Method Here //
+calculateTotal(){
+  let total = this.state.cart.map(e => {
+    return e.price
+  }).reduce((a, c) => a + c, 0);
+  return total;
+}
+
   render() {
+    // Map through products array to display their picture, name, price and include an 'Add to Cart' button 
     let productList = products.map((e, i) => {
       return (
         <div key={i}>
           <img src={e.picture} alt={e.product_name}/>
           <h1>{e.product_name}</h1>
-          <h4>{e.price}</h4>
+          <h4>${e.price}</h4>
           <button onClick={() => this.addProduct(e)}>Add To Cart</button>
         </div>
       )
     })
+    // Map through the cart array in state to display the items name and price when added to the cart
     let currentCart = this.state.cart.map((e, i) => {
       return (
         <div className='cart' key={i}>
           <span className='name'>{e.product_name}</span>
-          <span className='price'>{e.price}</span>
+          <span className='price'>${e.price}</span>
         </div>
       )
     })
-    console.log(this.state)
 
     return (
       <div className="App">
@@ -95,21 +98,24 @@ handleUserInput (e) {
           DevMountain Shop
         </h1>
 
+        {/* Display Products Here */}
         <div className='products'>
         {productList}
         </div>
 
+        {/* Create Checkout Section Here */}
         <div className="checkout">
             {currentCart}
             <div className='checkout-bottom'>
                 <div>
                   <input value={this.state.name} className="input" onChange={e => this.handleUserInput(e)} type="text" name='name' placeholder='Enter Name'/>
                 </div>
-                <h1>${this.state.total}</h1>
+                <h1>${this.calculateTotal()}</h1>
             </div>
             <button type='submit' onClick={this.clearCart}>Confirm Payment</button>
             {this.state.message ? <h4>{this.state.message}</h4> : null}
         </div>
+
       </div>
     );
   }
