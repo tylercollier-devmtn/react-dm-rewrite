@@ -32,23 +32,11 @@ class App extends Component {
 
     // Create addProduct method here //
     addProduct = (item) => {
-      let num;
       setTimeout(() => {
-        num = this.state.total + item.price;
-        item.quantity+=1
         console.log(item)
-        if(this.state.cart.includes(item)){
-          this.setState(prevState => prevState)
-          return
-        }
-          console.log(this.state)
-          // item.cartId = this.state.cart.length
-          console.log(item)
         this.setState({
-          total: num,
           cart: [...this.state.cart, item]
         })}, 100)
-        num = 0;
       }
 
     // Create handleUserInput method here //
@@ -105,7 +93,6 @@ class App extends Component {
           return
         } else {
         this.setState({
-          total: 0,
           cart: [],
           name: '',
           email: '', 
@@ -123,11 +110,6 @@ class App extends Component {
       // Method needs to filter out selected item from current cart in state //
       deleteItem = (item) => {
         let copy = this.state.cart.slice()
-        if(copy.includes(item) && item.quantity > 1){
-          item.quantity--
-          this.setState(this.state)
-          return
-        } else {
           let newCart = copy.filter(element => element !== item)
           setTimeout(() => {
           }, 1000)
@@ -135,16 +117,12 @@ class App extends Component {
                 cart: newCart
               })
         }
-      }
+      
 
       // Create calulateTotal Method here //
       // Update Method to check for quantity and include additional checkout charges //
       calculateTotal(){
         let total = this.state.cart.map(e => {
-          if(e.quantity > 1){
-            total = e.price * e.quantity
-            return total
-          }
           return e.price
         }).reduce((a, c) => a + c, 0)
         if(this.state.shipping) {
@@ -163,9 +141,9 @@ class App extends Component {
     //         <List key={i}>
     //           <ul>
     //             <div className='image'>
-    //               <img name={item.id} src={item.picture} alt={item.productName}/>
+    //               <img name={item.id} src={item.image} alt={item.title}/>
     //             </div>
-    //               <li>{item.productName}</li>
+    //               <li>{item.title}</li>
     //               <li>{item.price}</li>
     //               <button onClick={() => this.addProduct(item)}>Add To Cart</button>
     //           </ul>
@@ -176,7 +154,7 @@ class App extends Component {
     //     return (
     //       <List key={i}>
     //         <ul>
-    //           <li>{e.productName}</li>
+    //           <li>{e.title}</li>
     //           <li>{e.price}</li>
     //           <DeleteBtn delete={() => this.deleteItem(e.id)} icon="fas fa-times-circle" />
     //         </ul>
