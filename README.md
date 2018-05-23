@@ -14,9 +14,10 @@ Click Me!
 
 1. ```Fork``` and ```clone``` this repository.
 2. ```cd``` into the project directory.
-3. Run ```npm install``` or ```yarn```.
-4. Run ```npm start``` or ```yarn start``` once install has finished.
-5. In a seperate terminal, ```cd``` into project directory.
+3. Run ```npm install axios``` or ```yarn add axios```.
+4. Run ```npm watch``` or ```yarn watch``` (This must be done before step 5).
+5. Run ```npm start``` or ```yarn start``` once install has finished.
+6. In a seperate terminal, ```cd``` into project directory.
 
 # Step 1
 

@@ -28,7 +28,7 @@ class App extends Component {
       }
 
       componentDidMount(){
-        axios.get('https://practiceapi.devmountain.com/products').then(res => {
+        axios.get('http://localhost:3000/products').then(res => {
           this.setState({
             products: res.data
           })

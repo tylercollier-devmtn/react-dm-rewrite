@@ -19,6 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "api": "nodemon"
+    "watch": "json-server --watch db.json"
+  },
+  "devDependencies": {
+    "json-server": "^0.12.2"
   }
 }
