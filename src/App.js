@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import dm_bottle from './assets/DM_Bottle.jpg';
-import dm_hat from './assets/DM_Hat.jpeg';
-import dm_ladies from './assets/DM_Ladies_Tee.jpg';
-import dm_lanyard from './assets/DM_Lanyard.jpg';
-import dm_socks from './assets/DM_Socks.jpeg';
-import dm_tee from './assets/DM_Tee.jpg';
 
-//React 2
+// React 2
 import List from './2components/List'; 
 import Button from './2components/Button';
 // import DeleteBtn from './2components/DeleteBtn' //optional
 
+// React 3
+import axios from 'axios';
 
-const products = [{id: 0, productName: 'WebDev Tri T-Shirt', price: 25.00, picture: dm_tee, quantity: 0}, {id: 1, productName: 'WebDev Ladies Tri T-shirt', price: 25.00, picture: dm_ladies, quantity: 0}, {id: 2, productName: '#DevLife Modern Dad Cap', price: 19.00, picture: dm_hat, quantity: 0}, {id: 3, productName: 'DevMountain Shiny Bottle', price: 20.00, picture: dm_bottle, quantity: 0}, {id: 4, productName: 'DevMountain Lanyard', price: 6.00, picture: dm_lanyard, quantity: 0}, {id: 5, productName: 'DevMountain Moonwalk Socks', price: 15.00, picture: dm_socks, quantity: 0} ]
+const products = [{id: "jvmquxr", desc: "Solid Black", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fhat-1.jpg?alt=media&token=af7620f5-e9a1-4108-939c-472c48307528", price: 45, title: "Mountains Baseball Cap", category: "hat", company: "DevMountain"}, {id: "9ad1jor", desc: "Red", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fhat-2.jpg?alt=media&token=7401ac35-408b-4f10-8749-3dd6378f4198", price: 45, title: "Mountains Baseball Cap", category: "hat", company: "DevMountain"}, {id: "gqwu3di", desc: "Combo", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fcombo-tee.jpg?alt=media&token=068eefa0-d83f-497f-9809-5d0272a1639d", price: 55, title: "Combo T-shirt Set", category: "shirt", company: "DevMountain"}, {id: "fav2t9", desc: "Blue", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-1.jpeg?alt=media&token=0fbf36a3-a477-49f7-aa99-2bdb1030c449", price: 25, title: "Ripple Effect", category: "shirt", company: "DevMountain"}, {id: "rpy14i", desc: "Two-Pack", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-3.jpeg?alt=media&token=4dec772a-65ec-481b-bc60-a7c80f5b2c38", price: 33, title: "Two T-Shirt Set", category: "shirt", company: "DevMountain"}, {id: "4866flxr", desc: "Moon", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-4.jpeg?alt=media&token=1e1b81c8-a24f-4d34-85e4-153e4d00470e", price: 25, title: "Black T Shirt", category: "shirt", company: "DevMountain"}, {id: "27kqpvi", desc: "Rings", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-5.jpeg?alt=media&token=c27be083-eb5b-4a1f-98be-780f234fb5ce", price: 24, title: "Momentum", category: "shirt", company: "DevMountain"}]
 
 class App extends Component {
     constructor(){
         super();
         this.state = {
+          products: [],
           cart: [],
           name: '',
           message: '',
@@ -28,6 +25,14 @@ class App extends Component {
           giftWrap: false,
           validZip: false,
         }
+      }
+
+      componentDidMount(){
+        axios.get('https://practiceapi.devmountain.com/products').then(res => {
+          this.setState({
+            products: res.data
+          })
+        })
       }
 
     // Create addProduct method here //
@@ -123,11 +128,11 @@ class App extends Component {
       deleteItem = (item) => {
         let copy = this.state.cart.slice()
         // let newCart;
-        if(copy.includes(item) && item.quantity > 1){
-          item.quantity--
-          this.setState(this.state)
-          return
-        } else {
+        // if(copy.includes(item) && item.quantity > 1){
+        //   item.quantity--
+        //   this.setState(this.state)
+        //   return
+        // } else {
           let newCart = copy.filter(element => element !== item)
           setTimeout(() => {
           }, 1000)
@@ -135,15 +140,15 @@ class App extends Component {
                 cart: newCart
               })
         }
-      }
+      
 
       // Create calulateTotal Method here //
       calculateTotal(){
         let total = this.state.cart.map(e => {
-          if(e.quantity > 1){
-            total = e.price * e.quantity
-            return total
-          }
+          // if(e.quantity > 1){
+          //   total = e.price * e.quantity
+          //   return total
+          // }
           return e.price
         }).reduce((a, c) => a + c, 0)
         if(this.state.shipping) {
@@ -163,9 +168,9 @@ class App extends Component {
     //         <List key={i}>
     //           <ul>
     //             <div className='image'>
-    //               <img name={item.id} src={item.picture} alt={item.productName}/>
+    //               <img name={item.id} src={item.image} alt={item.title}/>
     //             </div>
-    //               <li>{item.productName}</li>
+    //               <li>{item.title}</li>
     //               <li>{item.price}</li>
     //               <button onClick={() => this.addProduct(item)}>Add To Cart</button>
     //           </ul>
@@ -176,7 +181,7 @@ class App extends Component {
     //     return (
     //       <List key={i}>
     //         <ul>
-    //           <li>{e.productName}</li>
+    //           <li>{e.title}</li>
     //           <li>{e.price}</li>
     //           <DeleteBtn delete={() => this.deleteItem(e.id)} icon="fas fa-times-circle" />
     //         </ul>
@@ -195,7 +200,7 @@ class App extends Component {
         {/* {productList} */}
 
         {/* Child Component Being Rendered is List - All attributes in the List tag are props - Here is were we render the return of List - Ex: List() */}
-        <List products={products} add={this.addProduct} showPicture={true}/> 
+        <List products={this.state.products} add={this.addProduct} showPicture={true}/> 
         </div>
 
         <div className="checkout">
