@@ -8,7 +8,7 @@ import dm_lanyard from './assets/DM_Lanyard.jpg';
 import dm_socks from './assets/DM_Socks.jpeg';
 import dm_tee from './assets/DM_Tee.jpg';
  
-const products = [{product_name: 'WebDev Tri T-Shirt', price: 25.00, picture: dm_tee}, {product_name: 'WebDev Ladies Tri T-shirt', price: 25.00, picture: dm_ladies}, {product_name: '#DevLife Modern Dad Cap', price: 19.00, picture: dm_hat}, {product_name: 'DevMountain Shiny Bottle', price: 20.00, picture: dm_bottle}, {product_name: 'DevMountain Lanyard', price: 6.00, picture: dm_lanyard}, {product_name: 'DevMountain Moonwalk Socks', price: 15.00, picture: dm_socks} ]
+const products = [{id: "jvmquxr", desc: "Solid Black", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fhat-1.jpg?alt=media&token=af7620f5-e9a1-4108-939c-472c48307528", price: 45, title: "Mountains Baseball Cap", category: "hat", company: "DevMountain"}, {id: "9ad1jor", desc: "Red", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fhat-2.jpg?alt=media&token=7401ac35-408b-4f10-8749-3dd6378f4198", price: 45, title: "Mountains Baseball Cap", category: "hat", company: "DevMountain"}, {id: "gqwu3di", desc: "Combo", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fcombo-tee.jpg?alt=media&token=068eefa0-d83f-497f-9809-5d0272a1639d", price: 55, title: "Combo T-shirt Set", category: "shirt", company: "DevMountain"}, {id: "fav2t9", desc: "Blue", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-1.jpeg?alt=media&token=0fbf36a3-a477-49f7-aa99-2bdb1030c449", price: 25, title: "Ripple Effect", category: "shirt", company: "DevMountain"}, {id: "rpy14i", desc: "Two-Pack", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-3.jpeg?alt=media&token=4dec772a-65ec-481b-bc60-a7c80f5b2c38", price: 33, title: "Two T-Shirt Set", category: "shirt", company: "DevMountain"}, {id: "4866flxr", desc: "Moon", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-4.jpeg?alt=media&token=1e1b81c8-a24f-4d34-85e4-153e4d00470e", price: 25, title: "Black T Shirt", category: "shirt", company: "DevMountain"}, {id: "27kqpvi", desc: "Rings", image: "https://firebasestorage.googleapis.com/v0/b/firebase-dev-assessment.appspot.com/o/products%2Fshirt-5.jpeg?alt=media&token=c27be083-eb5b-4a1f-98be-780f234fb5ce", price: 24, title: "Momentum", category: "shirt", company: "DevMountain"}]
 
 class App extends Component {
   constructor(){
@@ -68,8 +68,8 @@ calculateTotal(){
     let productList = products.map((e, i) => {
       return (
         <div key={i}>
-          <img src={e.picture} alt={e.product_name}/>
-          <h1>{e.product_name}</h1>
+          <img src={e.image} alt={e.title}/>
+          <h1>{e.title}</h1>
           <h4>${e.price}</h4>
           <button onClick={() => this.addProduct(e)}>Add To Cart</button>
         </div>
@@ -79,7 +79,7 @@ calculateTotal(){
     let currentCart = this.state.cart.map((e, i) => {
       return (
         <div className='cart' key={i}>
-          <span className='name'>{e.product_name}</span>
+          <span className='name'>{e.title}</span>
           <span className='price'>${e.price}</span>
         </div>
       )
