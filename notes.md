@@ -1,0 +1,3 @@
+If any of your answers to the react-1 notes would change for react-2, please let me know.
+
+1) What needs to be updated for resuable buttons? The List & DeleteBtn should be able to work with Icons or Text depending on which prop is passed...
