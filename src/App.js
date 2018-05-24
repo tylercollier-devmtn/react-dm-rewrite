@@ -57,10 +57,10 @@ handleUserInput (e) {
 
 // Create calculateTotal Method Here //
 calculateTotal(){
-  let total = this.state.cart.map(e => {
+  return this.state.cart.map(e => {
     return e.price
   }).reduce((a, c) => a + c, 0);
-  return total;
+  // return total;
 }
 
   render() {
