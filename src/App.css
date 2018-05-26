@@ -2,33 +2,8 @@
   box-sizing: border-box;
 }
 
-.App {
+h1 {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .products {
@@ -37,27 +12,31 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .products > div {
-  margin: 2.5em auto;
-  width: 800px;
+  text-align: center;
+  margin: 5px;
+  padding: 10px;
   border: solid rgb(0, 200, 255) .3em;
+  flex: 1;
 }
 
 .products > div > img {
   margin: 20px;
-  width: 500px;
-  height: 425px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .checkout {
   width: 50%;
+  text-align: center;
   margin: 25px auto;
   border: solid black .5em;
 }
 
-.checkout > .cart {
+.checkout > .cart-item {
   padding: 5px;
   display: flex;
   justify-content: space-between;
@@ -75,15 +54,11 @@ span.price {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: red;
+  background-color: rgb(0, 200, 255);
 }
 
 .input {
-  width: 150%;
-  display: flex;
-  flex-direction: column;
-  background-color: yellow;
-  border: solid black 2px;
+  font-size: large;
 }
 
 .inputs > label {
